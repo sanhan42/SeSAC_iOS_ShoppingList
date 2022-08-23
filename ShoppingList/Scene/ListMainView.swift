@@ -9,10 +9,17 @@ import UIKit
 import SnapKit
 
 class ListMainView: UIView {
+    
+    let bgView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray6
+        return view
+    }()
+    
     let todoTextField: UITextField = {
         let view = UITextField()
-        view.placeholder = "   무엇을 구매하실 건가요?"
-        view.backgroundColor = .systemGray6
+        view.placeholder = "무엇을 구매하실 건가요?"
+        view.backgroundColor = .clear
         view.layer.cornerRadius = 8
         return view
     }()
@@ -44,20 +51,27 @@ class ListMainView: UIView {
     }
     
     func configureUI() {
+        bgView.addSubview(todoTextField)
+        bgView.addSubview(addButton)
         self.backgroundColor = .systemBackground
-        [todoTextField, addButton, tableView].forEach {
+        [bgView, tableView].forEach {
             self.addSubview($0)
         }
     }
     
     func setConstraints() {
-        todoTextField.snp.makeConstraints { make in
+        bgView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(12)
             make.leading.equalTo(self).offset(20)
             make.trailing.equalTo(self).offset(-20)
             make.height.equalTo(88)
         }
         
+        todoTextField.snp.makeConstraints { make in
+            make.top.bottom.trailing.equalTo(bgView)
+            make.leading.equalTo(bgView).offset(16)
+        }
+
         addButton.snp.makeConstraints { make in
             make.centerY.equalTo(todoTextField)
             make.width.equalTo(60)
@@ -66,10 +80,8 @@ class ListMainView: UIView {
        
         tableView.rowHeight = 45
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(todoTextField).offset(100)
-            make.bottom.equalTo(0)
-            make.leading.equalTo(0)
-            make.trailing.equalTo(0)
+            make.top.equalTo(bgView.snp.bottom).offset(10)
+            make.bottom.leading.trailing.equalToSuperview()
         }
     }
 }
