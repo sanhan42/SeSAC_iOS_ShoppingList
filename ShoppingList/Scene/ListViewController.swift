@@ -24,8 +24,6 @@ class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mainView.tableView.delegate = self
-        mainView.tableView.dataSource = self
         fetchTasks()
         configure()
     }
@@ -35,6 +33,9 @@ class ListViewController: UIViewController {
     }
     
     func configure() {
+        mainView.tableView.delegate = self
+        mainView.tableView.dataSource = self
+        mainView.todoTextField.delegate = self
         mainView.addButton.addTarget(self, action: #selector(addButtonClicked), for: .touchUpInside)
     }
 
@@ -116,5 +117,12 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         } catch {
             print("Star Update Fail")
         }
+    }
+}
+
+extension ListViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        addButtonClicked()
+        return true
     }
 }
