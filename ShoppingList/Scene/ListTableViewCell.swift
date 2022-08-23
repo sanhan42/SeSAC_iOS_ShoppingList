@@ -8,16 +8,14 @@
 import UIKit
 
 class ListTableViewCell: UITableViewCell {
-    let checkboxImage: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(systemName: "checkmark.square")
+    let checkboxButton: UIButton = {
+        let view = UIButton()
         view.tintColor = .black
         return view
     }()
     
-    let starImage: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(systemName: "star")
+    let starButton: UIButton = {
+        let view = UIButton()
         view.tintColor = .black
         return view
     }()
@@ -28,7 +26,7 @@ class ListTableViewCell: UITableViewCell {
     }()
     
     lazy var stackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [checkboxImage, todoLabel, starImage])
+        let view = UIStackView(arrangedSubviews: [checkboxButton, todoLabel, starButton])
         view.backgroundColor = .systemGray6
         return view
     }()
@@ -48,15 +46,24 @@ class ListTableViewCell: UITableViewCell {
     }
     
     func setConstraints() {
-        checkboxImage.snp.makeConstraints { make in
+        checkboxButton.snp.makeConstraints { make in
             make.width.equalTo(25)
+            make.leading.equalTo(8)
         }
-        starImage.snp.makeConstraints { make in
+        
+        starButton.snp.makeConstraints { make in
             make.width.equalTo(25)
+            make.trailing.equalTo(-12)
         }
+        
+        todoLabel.snp.makeConstraints { make in
+            make.leading.equalTo(checkboxButton).offset(40)
+            make.trailing.equalTo(starButton).offset(-40)
+        }
+        
         stackView.snp.makeConstraints { make in
-            make.top.equalTo(contentView).offset(10)
-            make.bottom.equalTo(contentView).offset(-10)
+            make.top.bottom.equalTo(contentView).offset(0)
+//            make.bottom.equalTo(contentView).offset(-10)
             make.leading.equalTo(contentView).offset(20)
             make.trailing.equalTo(contentView).offset(-20)
         }

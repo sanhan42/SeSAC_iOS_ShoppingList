@@ -11,7 +11,7 @@ import SnapKit
 class ListMainView: UIView {
     let todoTextField: UITextField = {
         let view = UITextField()
-        view.placeholder = "무엇을 구매하실 건가요?"
+        view.placeholder = "   무엇을 구매하실 건가요?"
         view.backgroundColor = .systemGray6
         view.layer.cornerRadius = 8
         return view
